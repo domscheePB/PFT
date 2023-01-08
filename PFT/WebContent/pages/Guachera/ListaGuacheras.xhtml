@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/layout/layout.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="title">
+		<c:set var="title" value="Listado de Guacheras" scope="request" />
+	</ui:define>
+	
+	<ui:define name="content">
+	
+	<f:metadata>
+	    <f:event type="preRenderView" listener="#{listadoGuachera.preRenderViewListener}"/>
+	</f:metadata>
+		
+	<h:form>
+	<h3><h:outputLabel value="Criterios de Seleccion"/></h3>
+	
+		 <p:messages id="messages" showDetail="true" closable="true">
+        	<p:autoUpdate />
+    	</p:messages>
+		<h:panelGrid columns="4" id="filtro">
+			<h:panelGrid columns="2" id="filtroIzquierda">
+				<p:outputLabel value="Identificador" />
+				<p:inputText id="identificador" value="#{listadoGuachera.identificador}" />
+				
+				<p:outputLabel value="Capacidad desde:" />
+				<p:inputText id="capacidadDesde" value="#{listadoGuachera.capacidadDesde}" />
+				
+				<p:outputLabel value="Ancho desde:" />
+				<p:inputText id="anchoDesde" value="#{listadoGuachera.anchoDesde}" />
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" id="filtroCentroIzquierda">
+				<p:outputLabel value="Tipo de Guachera" />
+				<p:selectOneMenu id="tipoGuachera" value="#{listadoGuachera.tipo}">
+					<f:selectItem itemValue="" itemLabel="--Todos--" />
+	   				<f:selectItems value="#{listadoGuachera.tipos}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Capacidad hasta:" />
+				<p:inputText id="capacidadHasta" value="#{listadoGuachera.capacidadHasta}" />
+				
+				<p:outputLabel value="Ancho hasta:" />
+				<p:inputText id="anchoHasta" value="#{listadoGuachera.anchoHasta}" />
+				
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" id="filtroCentroDerecha">
+				<p:outputLabel value="Largo desde:" />
+				<p:inputText id="largoDesde" value="#{listadoGuachera.largoDesde}" />
+				
+				<p:outputLabel value="Latitud desde:" />
+				<p:inputText id="latitudDesde" value="#{listadoGuachera.latitudDesde}" />
+				
+				<p:outputLabel value="Longitud desde:" />
+				<p:inputText id="longitudDesde" value="#{listadoGuachera.longitudDesde}" />
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" id="filtroDerecha">
+				<p:outputLabel value="Largo hasta:" />
+				<p:inputText id="largoHasta" value="#{listadoGuachera.largoHasta}" />
+				
+				<p:outputLabel value="Latitud hasta:" />
+				<p:inputText id="latitudHasta" value="#{listadoGuachera.latitudHasta}" />
+				
+				<p:outputLabel value="Longitud hasta:" />
+				<p:inputText id="longitudHasta" value="#{listadoGuachera.longitudHasta}" />
+			</h:panelGrid>
+			
+		</h:panelGrid>
+		<h:commandButton value="Buscar"	action="#{listadoGuachera.listar}"/>
+	</h:form>
+
+	<h3><h:outputLabel value="Guacheras seleccionadas"/></h3>
+	<p:dataTable value="#{listadoGuachera.guacherasSeleccionadas}"
+		var="guachera"
+		   styleClass = "employeeTable"
+   		   headerClass = "employeeTableHeader"
+   		   id="tabla">
+   		
+		<p:column  sortBy="#{guachera.identificadorUnico}">
+			<f:facet name="header">Identificador</f:facet>    				
+      		#{guachera.identificadorUnico}
+   		</p:column>
+   		
+   		<p:column  sortBy="#{guachera.tipoGuachera.tipo}">
+			<f:facet name="header">Tipo de Guachera</f:facet>    				
+      		#{guachera.tipoGuachera.tipo}
+   		</p:column>
+   		
+   		<p:column  sortBy="#{guachera.capacidad}">
+			<f:facet name="header">Capacidad</f:facet>    				
+      		#{guachera.capacidad}
+   		</p:column>
+   		
+   		<p:column  sortBy="#{guachera.ancho}">
+			<f:facet name="header">Ancho</f:facet>    				
+      		#{guachera.ancho}
+   		</p:column>
+   		
+   		<p:column  sortBy="#{guachera.largo}">
+			<f:facet name="header">Largo</f:facet>    				
+      		#{guachera.largo}
+   		</p:column>
+   		
+   		<p:column  sortBy="#{guachera.ubicacion.latitud}">
+			<f:facet name="header">Latitud</f:facet>    				
+      		#{guachera.ubicacion.latitud}
+   		</p:column>
+   		
+   		<p:column  sortBy="#{guachera.ubicacion.longitud}">
+			<f:facet name="header">Longitud</f:facet>    				
+      		#{guachera.ubicacion.longitud}
+   		</p:column>
+   		
+		<p:column>
+			<f:facet name="header">Ver Detalle</f:facet>
+			<h:link value="Ver Detalle" outcome="GestionGuacheras.xhtml">
+    			<f:param name="id" value="${guachera.id}" />
+    			<f:param name="modalidad" value="view" />
+    		</h:link>
+		</p:column>
+		
+		<p:column>
+			<f:facet name="header">Eliminar Guachera</f:facet>
+			<p:commandLink action="#{listadoGuachera.eliminarGuachera(guachera)}" process="@this" update="tabla">
+	      	    <h:outputText value="Eliminar"/>
+	        </p:commandLink>
+	   	</p:column>
+	</p:dataTable>
+    </ui:define>
+</ui:composition>

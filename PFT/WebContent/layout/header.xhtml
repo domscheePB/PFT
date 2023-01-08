@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui" >
+    
+   	<div align="right"  style="background: linear-gradient(270deg, rgba(0, 89, 179, 1) 50%, transparent 100%);padding: 12px">
+		<span 
+			style="color: white; font-size: 180%; font-family: Arial; margin: 5px">
+			Sistema de Gestión de Tambo </span>
+			
+		<c:if
+		test="#{gestionSesison.getCurrentInstance().getLoggedUser()!=null}">
+		<span 
+			style="color: white; font-size: 180%; font-family: Arial; margin: 20px">
+			(#{gestionSesison.getCurrentInstance().getLoggedUser()})</span>
+			<p:commandButton value="Cerrar Sesión" update="@all" action="#{gestionLogout.cerrarSesion()}" />
+		</c:if>
+	</div>
+	
+</ui:composition>
