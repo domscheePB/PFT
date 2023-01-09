@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <style type="text/css">
+    button.ui-button {
+        margin-right: .5rem;
+    }
+	</style>
+
+    <style>
+    .menu
+    {
+  		float: left;
+  		width: 100%;
+  		text-align: center;
+	}
+	.menu button
+	{
+		padding: 8px;
+  		margin-top: 10px;
+  		margin-left: 8px;
+  		width: 100%;
+	}
+    </style>
+	    <div class="menu">
+	    	<h:outputLabel value="Funciones Usuarios" rendered="#{gestionLogin.funcionesAdministrador}" style="background-color: rgb(100, 174, 255); padding: 8px; margin-top: 10px; width: 100%; color: black; display: block; font-weight: bold"/>
+		    <p:button value="Altas de Usuarios" rendered="#{gestionLogin.funcionesAdministrador}" outcome="/pages/Usuarios/GestionUsuarios.xhtml">
+		    	<f:param name="id" value="" />
+    			<f:param name="modalidad" value="insert" />
+    			<f:param name="rol" value="Administrador"></f:param>
+    		</p:button>
+		    <p:button value="Administración de Usuarios" rendered="#{gestionLogin.funcionesAdministrador}" outcome="/pages/Usuarios/ListaUsuarios.xhtml" ></p:button>
+		   	<h:outputLabel value="Funciones Guacheras" rendered="#{gestionLogin.funcionesEncargado}" style="background-color: rgb(100, 174, 255); padding: 8px; margin-top: 10px; width: 100%; color: black; display: block; font-weight: bold"/>
+		    <p:button value="Altas de Guacheras" rendered="#{gestionLogin.funcionesEncargado}" outcome="/pages/Guachera/GestionGuacheras.xhtml">
+		    	<f:param name="id" value="" />
+    			<f:param name="modalidad" value="insert" />
+		    </p:button>
+		    <p:button value="Administración de Guacheras" rendered="#{gestionLogin.funcionesEncargado}" outcome="/pages/Guachera/ListaGuacheras.xhtml"></p:button>
+		    <h:outputLabel value="Funciones Terneras" rendered="true" style="background-color: rgb(100, 174, 255); padding: 8px; margin-top: 10px; width: 100%; color: black; display: block; font-weight: bold"/>
+		    <p:button value="Altas de Terneras" rendered="#{gestionLogin.funcionesEncargado}" outcome="/pages/Ternera/GestionTerneras.xhtml">
+		    	<f:param name="id" value="" />
+    			<f:param name="modalidad" value="insert" />
+    		</p:button>
+		    <p:button value="Administración de Terneras" rendered="#{gestionLogin.funcionesEncargado}" outcome="/pages/Ternera/ListaTerneras.xhtml"></p:button>
+		    <p:button value="Registro de Peso" outcome="/pages/Historicos/AltaHistoricoPeso.xhtml">
+		    	<f:param name="usuario" value="#{gestionSesison.getCurrentInstance().getLoggedUser()}" />
+		    </p:button>
+		    <p:button value="Registro de Temperatura" outcome="/pages/Historicos/AltaHistoricoTemperatura.xhtml">
+		    	<f:param name="usuario" value="#{gestionSesison.getCurrentInstance().getLoggedUser()}" />
+		    </p:button>
+		    <p:button value="Listado de Histórico de Enfermedad" rendered="#{gestionLogin.funcionesEncargado}" outcome="/pages/Historicos/ListaHistoricoEnfermedad.xhtml"></p:button>
+		    <p:button value="Variación de Peso" rendered="#{gestionLogin.funcionesEncargado}" outcome="/pages/Historicos/ListaHistoricoPeso.xhtml"></p:button>
+		    <p:button value="Listar costos de Alimentación" rendered="#{gestionLogin.funcionesEncargado}" outcome="/pages/Historicos/ListaHistoricoAlimento.xhtml"></p:button>
+		    <p:button value="Carga Histórico de Enfermedad" rendered="#{gestionLogin.funcionesEncargado}" outcome="/pages/Historicos/AltaHistoricoEnfermedad.xhtml"></p:button>
+	  	</div>
+</ui:composition>

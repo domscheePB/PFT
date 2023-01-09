@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/layout/layout.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="title">
+		<c:set var="title" value="Gestion de Usuarios" scope="request" />
+	</ui:define>
+	
+	<f:metadata>
+	    <f:event type="preRenderView" listener="#{gestionUsuarios.preRenderViewListener}"/>
+	</f:metadata>
+	
+	<ui:define name="content">
+	<h:form>
+		<h:link value="Nuevo usuario" outcome="GestionUsuarios.xhtml">
+    			<f:param name="id" value="" />
+    			<f:param name="modalidad" value="insert" />
+    	</h:link>
+    
+	<h3><h:outputLabel value="Criterios de Seleccion"/></h3>
+		 <p:messages id="messages" showDetail="true" closable="true">
+    	</p:messages>
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Nombre" />
+			<p:inputText id="nombre" value="#{gestionUsuarios.criterioNombre}" />
+			
+			<p:outputLabel value="Apellido" />
+			<p:inputText id="apellido" value="#{gestionUsuarios.criterioApellido}" />
+			
+			<p:outputLabel value="Documento" />
+			<p:inputText id="documento" value="#{gestionUsuarios.criterioDocumento}" />
+
+			<p:outputLabel value="Rol" />
+			<p:selectOneMenu value="#{gestionUsuarios.criterioRol}">
+   				<f:selectItem itemValue="" itemLabel="--Todos--" />
+   				<f:selectItem itemValue="Administrador" itemLabel="Administrador" />
+   				<f:selectItem itemValue="Encargado" itemLabel="Encargado" />
+   				<f:selectItem itemValue="Personal" itemLabel="Personal" />
+			</p:selectOneMenu>
+		</h:panelGrid>
+		<h:commandButton value="Buscar"	action="#{gestionUsuarios.listar}"/>
+	</h:form>
+
+	<h3><h:outputLabel value="Usuarios seleccionados"/></h3>
+	<p:dataTable value="#{gestionUsuarios.usuariosSeleccionados}"
+		var="usuario"
+		   styleClass = "employeeTable"
+   		   headerClass = "employeeTableHeader"
+   		   id = "tabla">
+   		
+		<p:column  sortBy="#{usuario.nombre}">
+			<f:facet name="header">Nombre</f:facet>    				
+      		#{usuario.nombre}
+   		</p:column>
+   		
+   		<p:column  sortBy="#{usuario.apellido}">
+			<f:facet name="header">Apellido</f:facet>    				
+      		#{usuario.apellido}
+   		</p:column>
+   		
+   		<p:column  sortBy="#{usuario.documento}">
+			<f:facet name="header">Documento</f:facet>    				
+      		#{usuario.documento}
+   		</p:column>
+
+		<p:column sortBy="#{gestionUsuarios.obtenerRol(usuario)}">
+			<f:facet name="header">Rol</f:facet>    				
+      		#{gestionUsuarios.obtenerRol(usuario)}
+   		</p:column>
+   		
+		<p:column>
+			<f:facet name="header">Ver Detalle</f:facet>
+			<h:link value="Ver Detalle" outcome="GestionUsuarios.xhtml">
+    			<f:param name="id" value="${usuario.id}" />
+    			<f:param name="modalidad" value="view" />
+    		</h:link>
+		</p:column>
+		
+		<p:column>
+			<f:facet name="header">Eliminar Usuario</f:facet>
+			<p:commandLink action="#{gestionUsuarios.eliminarUsuario(usuario)}" process="@this" update="tabla">
+	      	    <h:outputText value="Eliminar"/>
+	        </p:commandLink>
+	   	</p:column>
+	</p:dataTable>
+    </ui:define>
+</ui:composition>

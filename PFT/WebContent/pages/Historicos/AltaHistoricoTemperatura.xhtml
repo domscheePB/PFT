@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/layout/layout.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="title">
+		<c:set var="title" value="Alta de registro de Temperatura" scope="request" />
+	</ui:define>
+	
+	<ui:define name="content">
+			 
+		<f:metadata>
+			<f:viewParam name="usuario" value="#{altaHistoricoTemperatura.usuario}" />
+		    <f:event type="preRenderView" listener="#{altaHistoricoTemperatura.preRenderViewListener}"/>
+		</f:metadata>
+
+	<h:form id="idRegistroTemperatura">
+		 
+		<p:messages id="messages" showDetail="true" closable="true">
+        	<p:autoUpdate />
+    	</p:messages>
+		<p:panelGrid columns="2" id="registro">
+			<p:outputLabel value="Identificador de Ternera" />
+			<p:selectOneMenu id="ternera" value="#{altaHistoricoTemperatura.historico.ternera.caravanatambo}">
+   				<f:selectItems value="#{altaHistoricoTemperatura.terneras}"/>
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="Temperatura registrada" />
+			<p:inputText id="peso" value="#{altaHistoricoTemperatura.historico.temperatura}" />
+			
+			<p:outputLabel value="Fecha de registro" />
+			<p:calendar id="fecha" value="#{altaHistoricoTemperatura.historico.fecha}" showOn="button"/>
+			
+		</p:panelGrid>
+		<h:commandButton value="Salvar cambios"
+			update=":form" 	action="#{altaHistoricoTemperatura.salvarCambios}">
+		</h:commandButton>
+	</h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<div align = "center" style="align-items: center">
+	
+	<h:form id="idLoginUsuario">
+		<p:panelGrid columns="2">	
+			<p:outputLabel value="Nombre de Usuario"/>
+			<p:inputText id="nombreUsuario" value="#{gestionLogin.usuario}" />
+				
+			<p:outputLabel value="Contraseña" />
+			<p:password id="toggle" value="#{gestionLogin.password}" toggleMask="true" redisplay="true"/>
+		</p:panelGrid>
+		<p:panelGrid columns="1">
+		<p:outputLabel value="La combinación de Usuario y Contraseña ingresada no es correcta, inténtelo nuevamente." rendered="#{gestionLogin.mensaje}" />
+		</p:panelGrid>
+		<h:commandButton value="Iniciar Sesión"	rendered="true" 
+			update=":form" 	action="#{gestionLogin.login}">
+		</h:commandButton>
+		
+	</h:form>
+	</div>
+</ui:composition>

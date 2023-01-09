@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/layout/layout.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="title">
+		<c:set var="title" value="Alta de registro de Enfermedad" scope="request" />
+	</ui:define>
+	
+	<ui:define name="content">
+	
+	<p:messages id="messages" showDetail="true" closable="true">
+        	<p:autoUpdate />
+    </p:messages>
+    
+	<h:panelGrid columns="2" id="carga">
+    <h:form enctype="multipart/form-data">
+        <p:fileUpload value="#{altaHistoricoEnfermedad.archivo}" mode="simple" skinSimple="true" label="Seleccione planilla para la carga"
+        accept=".xlsm, .xls, .xlsx"/>
+
+        <p:commandButton value="Cargar archivo" ajax="false" action="#{altaHistoricoEnfermedad.upload}" styleClass="mt-3 ui-button-outlined block"/>
+    </h:form>
+    </h:panelGrid>
+    
+    <p:dataTable value="#{altaHistoricoEnfermedad.padecimientosExcel}"
+				var="padecimiento"
+				   styleClass = "employeeTable"
+		   		   headerClass = "employeeTableHeader"
+		   		   id="tabla">
+		   		
+				<p:column  sortBy="#{padecimiento.identificadorTernera}">
+					<f:facet name="header">Identificador de Ternera</f:facet>    				
+		      		#{padecimiento.identificadorTernera}
+		   		</p:column>
+		   		
+		   		<p:column  sortBy="#{padecimiento.nomEnfermedad}">
+					<f:facet name="header">Enfermedad</f:facet>    				
+		      		#{padecimiento.nomEnfermedad}
+		   		</p:column>
+		   		
+		   		<p:column  sortBy="#{padecimiento.variante}">
+					<f:facet name="header">Variante</f:facet>    				
+		      		#{padecimiento.variante}
+		   		</p:column>
+		   		
+		   		<p:column  sortBy="#{padecimiento.gravedad}">
+					<f:facet name="header">Gravedad</f:facet>    				
+		      		#{padecimiento.gravedad}
+		   		</p:column>
+		   		
+		   		<p:column  sortBy="#{padecimiento.fechaRegistro}">
+					<f:facet name="header">Fecha de Registro</f:facet>
+		      		#{altaHistoricoEnfermedad.fechaFormateada(padecimiento.fechaRegistro)}
+		   		</p:column>
+			</p:dataTable>
+			<h:form>
+			<h:commandButton value="Guardar registros" action="#{altaHistoricoEnfermedad.cargarHistorico}"/>
+			</h:form>
+    </ui:define>
+</ui:composition>

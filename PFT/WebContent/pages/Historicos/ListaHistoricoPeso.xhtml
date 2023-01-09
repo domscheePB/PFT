@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/layout/layout.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="title">
+		<c:set var="title" value="Listado de variación de peso" scope="request" />
+	</ui:define>
+	
+	<ui:define name="content">
+	
+	<h:form>
+	<h3><h:outputLabel value="Criterios de Seleccion"/></h3>
+	
+		 <p:messages id="messages" showDetail="true" closable="true">
+        	<p:autoUpdate />
+    	</p:messages>
+		<h:panelGrid columns="1" id="panel">
+			<h:panelGrid columns="2" id="panelFiltros">
+				<h:panelGrid columns="2" id="filtroTernera">
+				<p:outputLabel value="Listar variación de Peso por Ternera" />
+				<p:outputLabel></p:outputLabel>
+					<p:outputLabel value="Identificador de Ternera" />
+					<p:inputText id="idTernera" value="#{listadoHistoricoPeso.identificadorTernera}" />
+					
+					<p:outputLabel value="Fecha registro desde" />
+					<p:calendar id="fechaDesde_T" value="#{listadoHistoricoPeso.fechaTerneraDesde}" showOn="button"/>
+					
+					<p:outputLabel value="Fecha registro hasta" />
+					<p:calendar id="fechaHasta_T" value="#{listadoHistoricoPeso.fechaTerneraHasta}" showOn="button"/>
+					
+					<h:commandButton value="Buscar"	action="#{listadoHistoricoPeso.seleccionarHistorico_T()}"/>
+					<p:outputLabel></p:outputLabel>
+					
+				</h:panelGrid>
+				<h:panelGrid columns="2" id="filtroGuachera">
+				<p:outputLabel value="Listar variación de Peso por Guachera" />
+				<p:outputLabel></p:outputLabel>
+					<p:outputLabel value="Identificador de Guachera" />
+					<p:inputText id="idGuachera" value="#{listadoHistoricoPeso.identificadorGuachera}" />
+					
+					<p:outputLabel value="Fecha registro desde" />
+					<p:calendar id="fechaDesde_G" value="#{listadoHistoricoPeso.fechaGuacheraDesde}" showOn="button"/>
+					
+					<p:outputLabel value="Fecha registro hasta" />
+					<p:calendar id="fechaHasta_G" value="#{listadoHistoricoPeso.fechaGuacheraHasta}" showOn="button"/>
+					
+					<h:commandButton value="Buscar"	action="#{listadoHistoricoPeso.seleccionarHistorico_G()}"/>
+				</h:panelGrid>
+			</h:panelGrid>
+			<h:panelGrid columns="2" id="panelTablas">
+			<h:panelGrid columns="1" id="panelTablaT">
+				<h1><h:outputLabel value="Variación de peso por Ternera"/></h1>
+				<p:dataTable value="#{listadoHistoricoPeso.historicosPeso_T}"
+					var="historico"
+					   styleClass = "employeeTable"
+			   		   headerClass = "employeeTableHeader"
+			   		   id="tablaT">
+			   		
+					<p:column  sortBy="#{historico.ternera.caravanatambo}">
+						<f:facet name="header">Identificador de Ternera</f:facet>
+						<h:outputLabel value="#{historico.ternera.caravanatambo}"/>
+			   		</p:column>
+			   		
+			   		<p:column  sortBy="#{historico.peso}">
+						<f:facet name="header">Variación de Peso</f:facet>
+						<h:outputLabel value="#{historico.peso}"/>
+			   		</p:column>
+
+				</p:dataTable>
+			</h:panelGrid>
+			<h:panelGrid columns="1" id="panelTablaG">
+				<h1><h:outputLabel value="Variación de peso por Guachera"/></h1>
+				<p:dataTable value="#{listadoHistoricoPeso.historicosPeso_G}"
+					var="historicoG"
+					   styleClass = "employeeTable"
+			   		   headerClass = "employeeTableHeader"
+			   		   id="tablaG">
+			   		
+					<p:column  sortBy="#{historicoG.identificadorGuachera}">
+						<f:facet name="header">Identificador de Guachera</f:facet>
+						<h:outputLabel value="#{historicoG.identificadorGuachera}"/>
+			   		</p:column>
+			   		
+			   		<p:column  sortBy="#{historicoG.ternera.caravanatambo}">
+						<f:facet name="header">Identificador de Ternera</f:facet> 
+						<h:outputLabel value="#{historicoG.ternera.caravanatambo}"/>   				
+			   		</p:column>
+			   		
+			   		<p:column  sortBy="#{historico.peso}">
+						<f:facet name="header">Variación de Peso</f:facet>
+						<h:outputLabel value="#{historicoG.peso}"/>
+			   		</p:column>
+				</p:dataTable>
+			</h:panelGrid>
+			<h:panelGrid columns="3" id="panelBotonesExportarT">
+				<h:commandLink >
+					<p:commandButton value="Exportar a xls" ajax="false"></p:commandButton>			
+						<p:dataExporter type="xls" target="tablaT" fileName="VariacionPesoTernera" ></p:dataExporter>				
+		    	</h:commandLink>
+		    	<h:commandLink >
+					<p:commandButton value="Exportar a PDF" ajax="false"></p:commandButton>
+						<p:dataExporter type="pdf" target="tablaT" fileName="VariacionPesoTernera" ></p:dataExporter>				
+		    	</h:commandLink>
+		    	<h:commandLink >
+					<p:commandButton value="Exportar a CSV" ajax="false"></p:commandButton>
+						<p:dataExporter type="csv" target="tablaT" fileName="VariacionPesoTernera" ></p:dataExporter>				
+		    	</h:commandLink>
+			</h:panelGrid>
+			<h:panelGrid columns="3" id="panelBotonesExportarG">
+				<h:commandLink >
+					<p:commandButton value="Exportar a xls" ajax="false"></p:commandButton>			
+						<p:dataExporter type="xls" target="tablaG" fileName="VariacionPesoGuachera" ></p:dataExporter>				
+		    	</h:commandLink>
+		    	<h:commandLink >
+					<p:commandButton value="Exportar a PDF" ajax="false"></p:commandButton>
+						<p:dataExporter type="pdf" target="tablaG" fileName="VariacionPesoGuachera" ></p:dataExporter>				
+		    	</h:commandLink>
+		    	<h:commandLink >
+					<p:commandButton value="Exportar a CSV" ajax="false"></p:commandButton>
+						<p:dataExporter type="csv" target="tablaG" fileName="VariacionPesoGuachera" ></p:dataExporter>				
+		    	</h:commandLink>
+			</h:panelGrid>
+			</h:panelGrid>
+		</h:panelGrid>
+	</h:form>
+    </ui:define>
+</ui:composition>

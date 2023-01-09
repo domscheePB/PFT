@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<!--
+	<persistence-unit name="EjemploEJB_JSF">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
+		<class>com.capa3Persistencia.entities.UsuarioPersistencia</class>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/> 			
+     		<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+      		<property name="show_sql" value="true"/>
+      		<property name="hibernate.format_sql" value="true"/>
+		</properties>
+	</persistence-unit>
+	-->
+	<persistence-unit name="EjemploEJB_JSF">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:/ProyectoPFT</jta-data-source>
+		<class>com.capa3Persistencia.entities.AdministradorPersistencia</class>
+		<class>com.capa3Persistencia.entities.AlojamientoPersistencia</class>
+		<class>com.capa3Persistencia.entities.EncargadoPersistencia</class>
+		<class>com.capa3Persistencia.entities.EnfermedadPersistencia</class>
+		<class>com.capa3Persistencia.entities.GravedadPersistencia</class>
+		<class>com.capa3Persistencia.entities.GuacheraPersistencia</class>
+		<class>com.capa3Persistencia.entities.HistoricoAlimentoPersistencia</class>
+		<class>com.capa3Persistencia.entities.HistoricoTerneraPesoPersistencia</class>
+		<class>com.capa3Persistencia.entities.HistoricoTerneraTemperaturaPersistencia</class>
+		<class>com.capa3Persistencia.entities.MedicamentoPersistencia</class>
+		<class>com.capa3Persistencia.entities.NombresEnfermedadPersistencia</class>
+		<class>com.capa3Persistencia.entities.PadecimientoPersistencia</class>
+		<class>com.capa3Persistencia.entities.PersonalPersistencia</class>
+		<class>com.capa3Persistencia.entities.RazaPersistencia</class>
+		<class>com.capa3Persistencia.entities.SuministroPersistencia</class>
+		<class>com.capa3Persistencia.entities.TerneraPersistencia</class>
+		<class>com.capa3Persistencia.entities.TiposAlimentoPersistencia</class>
+		<class>com.capa3Persistencia.entities.TipoGuacheraPersistencia</class>
+		<class>com.capa3Persistencia.entities.TitulosProfesionalPersistencia</class>
+		<class>com.capa3Persistencia.entities.UbicacionPersistencia</class>
+		<class>com.capa3Persistencia.entities.UsuarioPersistencia</class>
+		<class>com.capa3Persistencia.entities.VariantePersistencia</class>
+		<properties>
+         	<property name="hibernate.hbm2ddl.auto" value="validate"/>
+         	<property name="hibernate.show_sql" value="true"/>
+         	<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+		</properties>
+	</persistence-unit>
+</persistence>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/layout/layout.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="title">
+		<c:set var="title" value="Datos de Usuario" scope="request" />
+	</ui:define>
+	
+	<ui:define name="content">
+	<f:metadata>
+		<f:viewParam name="id" value="#{gestionUsuario.id}"/>
+		<f:viewParam name="modalidad" value="#{gestionUsuario.modalidad}"/>
+		<f:event type="preRenderView" listener="#{gestionUsuario.preRenderViewListener}"/>
+	</f:metadata>
+
+	<h:form id="idDatosUsuario">
+		 
+		<p:messages id="messages" closable="true">
+    	</p:messages>
+		<p:panelGrid columns="2" id="registro">
+				
+			<p:outputLabel value="Nombre" />
+			<p:inputText id="nombre" disabled="#{!gestionUsuario.modoEdicion}" value="#{gestionUsuario.usuarioSeleccionado.nombre}" />
+			
+			<p:outputLabel value="Apellido" />
+			<p:inputText id="apellido" disabled="#{!gestionUsuario.modoEdicion}" value="#{gestionUsuario.usuarioSeleccionado.apellido}" />
+			
+			<p:outputLabel value="Documento" />
+			<p:inputText id="documento" disabled="#{!gestionUsuario.modoEdicion}" value="#{gestionUsuario.usuarioSeleccionado.documento}" />
+			
+			<p:outputLabel value="Rol" />
+			<p:selectOneMenu id="rol" disabled="#{!gestionUsuario.modoEdicion}" value="#{gestionUsuario.rol}">
+				<p:ajax listener="#{gestionUsuario.viewDatosExtras()}" process="@this" update="registroOpcional"/>
+   				<f:selectItem itemValue="Administrador" itemLabel="Administrador" />
+   				<f:selectItem itemValue="Encargado" itemLabel="Encargado" />
+   				<f:selectItem itemValue="Personal" itemLabel="Personal" />
+			</p:selectOneMenu>
+		</p:panelGrid>
+		<p:panelGrid columns="3" id="registroOpcional">
+			<p:outputLabel value="Titulo Profesional" rendered="#{gestionUsuario.encargado}"/>
+			<p:selectOneMenu id="titulo" disabled="#{!gestionUsuario.modoEdicion}" rendered="#{gestionUsuario.encargado}" value="#{gestionUsuario.titulo}">
+   				<f:selectItems value="#{gestionUsuario.titulos}"/>
+			</p:selectOneMenu>
+			<p:message for="titulo" style="color:red" rendered="#{gestionUsuario.encargado}"/>
+			
+			<p:outputLabel value="Cantidad de horas de trabajo" rendered="#{gestionUsuario.personal}"/>
+			<p:inputText id="cantHoras" disabled="#{!gestionUsuario.modoEdicion}" rendered="#{gestionUsuario.personal}" value="#{gestionUsuario.cantHoras}" />
+			<p:message for="cantHoras" style="color:red" rendered="#{gestionUsuario.personal}"/>
+		</p:panelGrid>
+		<p:panelGrid columns="3" id="registroVisual">
+			<p:outputLabel value="Nombre de Usuario" rendered="#{!gestionUsuario.modoEdicion}"/>
+			<p:inputText id="nombreUsuario" disabled="true" rendered="#{!gestionUsuario.modoEdicion}" value="#{gestionUsuario.usuarioSeleccionado.nombreUsuario}" />
+			<p:outputLabel value="El nombre de usuario es generado automáticamente por el sistema y no puede ser editado." rendered="#{!gestionUsuario.modoEdicion}"/>
+			
+			<p:outputLabel value="Contraseña" rendered="#{!gestionUsuario.modoEdicion}"/>
+			<p:inputText id="contraseña" disabled="true" rendered="#{!gestionUsuario.modoEdicion}" value="#{gestionUsuario.claveSeleccionada}" />
+			<p:outputLabel value="La contraseña no puede ser editada por el administrador." rendered="#{!gestionUsuario.modoEdicion}"/>
+		</p:panelGrid>
+		<h:commandButton id="idModificar"  value="Modificar" rendered="#{!gestionUsuario.modoEdicion}"	>
+    			<f:param name="id" value="${gestionUsuario.id}" />
+    			<f:param name="modalidad" value="update" />
+		</h:commandButton> 
+		<h:commandButton value="Salvar cambios"	rendered="#{gestionUsuario.modoEdicion}" 
+			update=":form" action="#{gestionUsuario.salvarCambios}">
+		    	<f:param name="id" value="${gestionUsuario.id}" />
+    			<f:param name="modalidad" value="update" />
+		</h:commandButton>
+	</h:form>
+    </ui:define>
+</ui:composition>
